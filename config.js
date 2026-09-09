@@ -14,16 +14,16 @@ window.SITE_CONFIG = {
       url: "https://github.com/hmzz804/nonebot_plugin_cave"
     },
     {
-      title: "_HmZz_ 的视频空间",
-      description: "在 B 站记录视频创作与兴趣内容，把值得分享的片段整理成持续更新的个人频道。",
-      tags: ["Video", "Bilibili", "Creator"],
-      url: "https://space.bilibili.com/1641978514"
+      title: "华为 P9 上车 LineageOS 16",
+      description: "为旧款华为 P9 刷入 LineageOS 16 的实机教程，在 B 站获得 2 万余次播放与 500 余次收藏。",
+      tags: ["Android", "LineageOS", "Tutorial"],
+      url: "https://www.bilibili.com/video/BV1gG4y117bC"
     },
     {
-      title: "个人主页实验",
-      description: "持续迭代的个人网络空间，用设计与代码收纳作品、想法和公开身份。",
-      tags: ["HTML", "Design", "Web"],
-      url: "https://github.com/hmzz804/hmzz804.github.io"
+      title: "《One Last Kiss》钢琴翻弹",
+      description: "改编自 Animenz 版本的完整钢琴演奏，用影像记录对动漫音乐与演奏表达的持续探索。",
+      tags: ["Piano", "Animenz", "Video"],
+      url: "https://www.bilibili.com/video/BV1YNTW6kEXE"
     }
   ]
 };
