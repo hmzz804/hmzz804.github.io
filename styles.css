@@ -116,7 +116,7 @@ nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 .facts { margin: 54px 0 0; }
 .facts div { display: flex; justify-content: space-between; padding: 15px 0; border-top: 1px solid #3e403d; }
 .facts dt { color: #777b74; }
-.facts dd { margin: 0; }
+.facts dd { margin: 0; max-width: 72%; text-align: right; overflow-wrap: anywhere; }
 
 .contact { min-height: 620px; display: flex; flex-direction: column; justify-content: space-between; }
 .contact-row { display: flex; align-items: end; justify-content: space-between; gap: 40px; }
