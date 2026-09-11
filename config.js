@@ -8,10 +8,10 @@ window.SITE_CONFIG = {
   },
   projects: [
     {
-      title: "NoneBot 回声洞",
-      description: "为 NoneBot2 开发的 cave（回声洞）插件，让群聊里的匿名表达与互动更简单。",
-      tags: ["Python", "NoneBot2", "Open Source"],
-      url: "https://github.com/hmzz804/nonebot_plugin_cave"
+      title: "NoneBot 回声洞 · Rebuilt",
+      description: "持续维护的 NoneBot2 匿名回声洞插件，重构审核与分级权限流程，并以 SQLite 实现可靠的数据持久化。",
+      tags: ["Python", "NoneBot2", "SQLite"],
+      url: "https://github.com/hmzz804/nonebot_plugin_cave_rebuilt"
     },
     {
       title: "华为 P9 上车 LineageOS 16",
