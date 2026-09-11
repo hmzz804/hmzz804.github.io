@@ -1,6 +1,6 @@
 // 只需要修改这个文件，就能替换站点中的个人信息和项目。
 window.SITE_CONFIG = {
-  name: "HMZZ",
+  name: "HmZz",
   email: "hmzz21669@gmail.com",
   socials: {
     github: "https://github.com/hmzz804",
