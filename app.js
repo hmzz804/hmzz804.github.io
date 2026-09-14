@@ -44,10 +44,20 @@ window.addEventListener("pointermove", (event) => {
 
 const canvas = document.querySelector("#terrain");
 const context = canvas.getContext("2d");
+const visual = canvas.closest(".hero-visual");
+const exploreLabel = document.querySelector("#explore-label");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const touchFirst = window.matchMedia("(pointer: coarse)").matches;
 let pointerX = 0.5;
 let pointerY = 0.5;
+let targetX = 0.5;
+let targetY = 0.5;
+let pressed = false;
+let ripples = [];
 let frame = 0;
 let animationId;
+
+if (touchFirst) exploreLabel.textContent = "TOUCH TO EXPLORE";
 
 function resizeCanvas() {
   const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -59,6 +69,8 @@ function resizeCanvas() {
 function drawTerrain(time = 0) {
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
+  pointerX += (targetX - pointerX) * (pressed ? 0.2 : 0.075);
+  pointerY += (targetY - pointerY) * (pressed ? 0.2 : 0.075);
   context.clearRect(0, 0, width, height);
   context.fillStyle = "#141614";
   context.fillRect(0, 0, width, height);
@@ -71,21 +83,50 @@ function drawTerrain(time = 0) {
       const centerPull = Math.exp(-Math.pow((x / width) - pointerX, 2) * 15);
       const wave = Math.sin(x * 0.018 + row * 0.68 + time * 0.00035) * 15;
       const ripple = Math.sin(x * 0.042 - row * 0.35 + pointerY * 5) * 6;
-      const y = yBase + wave * centerPull + ripple;
+      let touchWave = 0;
+      ripples.forEach((pulse) => {
+        const age = (time - pulse.startedAt) / 900;
+        const distance = Math.hypot((x / width) - pulse.x, (yBase / height) - pulse.y);
+        touchWave += Math.sin(distance * 38 - age * 13) * Math.exp(-distance * 7) * (1 - age) * 18;
+      });
+      const y = yBase + wave * centerPull + ripple + touchWave;
       if (x === -20) context.moveTo(x, y); else context.lineTo(x, y);
     }
     context.strokeStyle = row % 5 === 0 ? "rgba(215,255,70,.68)" : "rgba(242,240,233,.22)";
     context.stroke();
   }
+  ripples = ripples.filter((pulse) => time - pulse.startedAt < 900);
   frame = time;
-  animationId = requestAnimationFrame(drawTerrain);
+  if (!reducedMotion) animationId = requestAnimationFrame(drawTerrain);
 }
 
-canvas.addEventListener("pointermove", (event) => {
+function updatePointer(event) {
   const rect = canvas.getBoundingClientRect();
-  pointerX = (event.clientX - rect.left) / rect.width;
-  pointerY = (event.clientY - rect.top) / rect.height;
+  targetX = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+  targetY = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+}
+
+canvas.addEventListener("pointerdown", (event) => {
+  pressed = true;
+  canvas.setPointerCapture(event.pointerId);
+  updatePointer(event);
+  ripples.push({ x: targetX, y: targetY, startedAt: performance.now() });
+  visual.classList.add("is-active");
+  exploreLabel.textContent = touchFirst ? "DRAG TO SHAPE" : "PRESS / MOVE TO SHAPE";
+});
+canvas.addEventListener("pointermove", (event) => {
+  if (event.pointerType === "touch" && !pressed) return;
+  updatePointer(event);
+  visual.classList.add("is-active");
+});
+canvas.addEventListener("pointerup", (event) => {
+  pressed = false;
+  if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+  exploreLabel.textContent = touchFirst ? "TOUCH TO EXPLORE" : "MOVE TO EXPLORE";
+});
+canvas.addEventListener("pointercancel", () => {
+  pressed = false;
 });
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
-if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) drawTerrain(frame); else animationId = requestAnimationFrame(drawTerrain);
+if (reducedMotion) drawTerrain(frame); else animationId = requestAnimationFrame(drawTerrain);
