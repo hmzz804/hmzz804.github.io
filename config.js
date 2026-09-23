@@ -8,7 +8,7 @@ window.SITE_CONFIG = {
   },
   analytics: {
     // 在 Cloudflare Web Analytics 创建 hmzz.fun 后，将站点 Token 填在这里。
-    cloudflareToken: ""
+    cloudflareToken: "d35f67deab134aed89f6c7576d59cbc5"
   },
   projects: [
     {
