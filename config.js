@@ -6,6 +6,10 @@ window.SITE_CONFIG = {
     github: "https://github.com/hmzz804",
     bilibili: "https://space.bilibili.com/1641978514"
   },
+  analytics: {
+    // 在 Cloudflare Web Analytics 创建 hmzz.fun 后，将站点 Token 填在这里。
+    cloudflareToken: ""
+  },
   projects: [
     {
       title: "NoneBot 回声洞 · Rebuilt",
